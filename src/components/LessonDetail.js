@@ -15,6 +15,7 @@ import PillarMetaData from './PillarMetadata';
 import Link from '@material-ui/core/Link';
 import * as Constants from './constants';
 
+
 class LessonDetail extends Component{
   constructor(){
     super();
@@ -32,6 +33,9 @@ class LessonDetail extends Component{
       editMode: false,
       selectedPillars: [],
     }
+    this.handleLessonTextChange = this.handleLessonTextChange.bind(this);
+    this.handleLessonNameChange = this.handleLessonNameChange.bind(this);
+
   }
 
   componentDidMount(){
@@ -40,19 +44,43 @@ class LessonDetail extends Component{
 
   updatePillar(pillarData){
     var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-    axios.put(Constants.cdApiUrl + '/characterdaily/api/pillars/pillarById/' + id, pillarData, {
+    axios.put(Constants.cdApiUrl + '/characterdaily/api/lessons/' + id, pillarData, {
       headers: {"Authorization":"Bearer fafadfad"}
   }).then(response => {
-      this.props.history.push('/pillars');
+      // assign lesson to pillars
+      var pillars = this.state.selectedPillars;
+      var data = {
+        pillarIds : pillars
+      }
+      axios.put(Constants.cdApiUrl + '/characterdaily/api/lessons/' + id + "/assignLessonToPillars/",pillars, {
+        headers: {"Authorization":"Bearer fafadfad"}
+    }).then(response => {
+        this.props.history.push('/lessons');
+      }).catch(err => console.log(err));
     }).catch(err => console.log(err));
   }
+
+
+  handleLessonNameChange(e){
+    var x = e.target.value;
+    this.setState({lessonName: x,
+    })
+  }
+
+  handleLessonTextChange(e){
+    var x = e.target.value;
+    this.setState({lessonText: x,
+    })
+  }
+
 
   onSubmit(e){
     
     var data = new FormData();
-    data.append('file',this.state.selectedFile);
-    data.append('pillarName',this.refs.name.value);
-
+    data.append('imageFile',this.state.selectedFile);
+    data.append('lessonName',this.state.lessonName);
+    data.append('lessonText',this.state.lessonText);
+    data.append('grade',this.state.grade);
     this.updatePillar(data);
     e.preventDefault();
   }
@@ -169,7 +197,7 @@ class LessonDetail extends Component{
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<div><img src={imagePreviewUrl} /></div>);
+      $imagePreview = (<div><img src={imagePreviewUrl} style={{height:"300px",width:"450px",maxHeight:"300px",maxWidth:"450px"}}/></div>);
     }
 
     if(this.state.editMode == true)
@@ -180,9 +208,9 @@ class LessonDetail extends Component{
             <Grid item xs={9}>
             <form onSubmit={this.onSubmit.bind(this)}>
               <div className="input-field">
-              <Input placeholder="Input 2" defaultValue={this.state.lessonName} />
+              <Input placeholder="Input 2" defaultValue={this.state.lessonName} onChange={this.handleLessonNameChange}/>
               </div>
-              <Textarea placeholder="Input 2" defaultValue={this.state.lessonText} />
+              <Textarea placeholder="Input 2" defaultValue={this.state.lessonText} onChange={this.handleLessonTextChange} style={{height:"300px",maxHeight:"800px"}}/>
               <br></br><br></br>
               <input type="submit" value="Save" className="btn" onClick={this.updateLesson}/>
             </form>
@@ -191,6 +219,7 @@ class LessonDetail extends Component{
               <div style={{marginTop:'50px'}}>
                 <div style={{marginBottom:'10px'}}>Grade : {this.state.grade}</div>
             {$imagePreview}
+        
                 <input ref="file" type="file" className="form-control" name="file" onChange={this.onFileChangeHandler}/>
                 </div>
                 <PillarMetaData pillars={this.state.pillars} allPillars={this.state.pillarsMetadata} names={this.state.names} editMode={this.state.editMode} storeSelectedPillars={this.storeSelectedPillars}/>
@@ -210,9 +239,9 @@ class LessonDetail extends Component{
         <Grid item xs={9}>
         <form onSubmit={this.onSubmit.bind(this)}>
           <div className="input-field">
-          <Input placeholder="Input 2" defaultValue={this.state.lessonName} />
+          <Input placeholder="Input 2" defaultValue={this.state.lessonName} onChange={this.handleLessonNameChange}/>
           </div>
-          <Textarea placeholder="Input 2" defaultValue={this.state.lessonText} />
+          <Textarea placeholder="Input 2" defaultValue={this.state.lessonText} onChange={this.handleLessonTextChange}/>
           <br></br><br></br>
           <input type="submit" value="Save" className="btn" onClick={this.updateLesson}/>
         </form>

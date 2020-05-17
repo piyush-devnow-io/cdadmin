@@ -59,6 +59,15 @@ export default function RecipeReviewCard(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const getDate = (t) => {
+    const dateObject = new Date(t)
+ 
+    const humanDateFormat = dateObject.toLocaleString()
+
+return humanDateFormat;
+  }
+
   return (
     <Grid container spacing={3}>
       {props.lessonsData.map((lesson) => (
@@ -76,7 +85,7 @@ export default function RecipeReviewCard(props) {
                   </IconButton>
                 }
                 title={lesson.lessonName}
-                subheader={lesson.dateCreated}
+                subheader={getDate(lesson.dateCreated)}
               />
               <CardMedia
                 className={classes.media}
@@ -85,8 +94,7 @@ export default function RecipeReviewCard(props) {
               />
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  This impressive paella is a perfect party dish and a fun meal to cook together with your
-                  guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                  Lessons Description 
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>

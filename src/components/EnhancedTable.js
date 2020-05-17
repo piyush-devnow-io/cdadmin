@@ -298,7 +298,7 @@ export default function EnhancedTable(headCells) {
                         <TableCell align="right" style={{textAlign:"center"}}>{row.email}</TableCell>
                         <TableCell align="right" style={{textAlign:"center"}}>
                         <Button variant="contained" color="primary" href="#contained-buttons">
-  Edit
+  Details
 </Button>
                         </TableCell>
                       </TableRow>

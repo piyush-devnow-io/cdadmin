@@ -4,6 +4,7 @@ import EnhancedTable from './EnhancedTable';
 import PillarsTable from './PillarsTable';
 import Link from '@material-ui/core/Link';
 import * as Constants from './constants';
+import Input from 'muicss/lib/react/input';
 
 
 class PillarDetails extends Component{
@@ -13,8 +14,11 @@ class PillarDetails extends Component{
       pillarName : "",
       imageUrl : "",
       file: '',
-      imagePreviewUrl: ''
+      imagePreviewUrl: '',
     }
+    
+    this.handleNameChange = this.handleNameChange.bind(this);
+
   }
 
   componentDidMount(){
@@ -23,7 +27,7 @@ class PillarDetails extends Component{
 
   updatePillar(pillarData){
     var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-    axios.put(Constants.cdApiUrl +'/characterdaily/api/pillars/pillarById/' + id, pillarData, {
+    axios.put(Constants.cdApiUrl +'/characterdaily/api/pillars/' + id, pillarData, {
       headers: {"Authorization":"Bearer fafadfad"}
   }).then(response => {
       this.props.history.push('/pillars');
@@ -34,7 +38,7 @@ class PillarDetails extends Component{
     
     var data = new FormData();
     data.append('file',this.state.selectedFile);
-    data.append('pillarName',this.refs.name.value);
+    data.append('pillarName',this.state.pillarName);
 
     this.updatePillar(data);
     e.preventDefault();
@@ -58,7 +62,11 @@ class PillarDetails extends Component{
     
    };
 
-  
+  handleNameChange(e){
+    var x = e.target.value;
+    this.setState({pillarName: x,
+    })
+  }
 
   getUsers(){
     var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
@@ -80,7 +88,7 @@ class PillarDetails extends Component{
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
+      $imagePreview = (<img src={imagePreviewUrl} style={{height:"300px",width:"450px",maxHeight:"300px",maxWidth:"450px"}}/>);
     }
   
     return (
@@ -89,9 +97,10 @@ class PillarDetails extends Component{
         <br />
        <form onSubmit={this.onSubmit.bind(this)}>
           <div className="input-field">
-            <input type="text" name="name" ref="name" value={this.state.pillarName}/>
-            <label htmlFor="name">Name</label>
+          <Input placeholder="Input 2" ref="name" defaultValue={this.state.pillarName} onChange={this.handleNameChange}/>
+           
             {$imagePreview}
+            
             <input ref="file" type="file" className="form-control" name="file" onChange={this.onFileChangeHandler}/>
           </div>
 

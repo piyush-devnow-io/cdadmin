@@ -80,7 +80,7 @@ class UsersData extends Component{
 const headCells = [
   { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-  { id: 'edit', numeric: true, disablePadding: false, label: 'Edit' },
+  { id: 'edit', numeric: true, disablePadding: false, label: 'Details' },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -153,11 +153,7 @@ const useStyles = makeStyles((theme) => ({
        </div> 
         <EnhancedTable headCells={headCells} users={this.state.users} previousPage={this.loadPreviousPage} nextPage={this.loadNextPage}/>
         </ul>
-        <div className="fixed-action-btn">
-      <Link to="/user/add" className="btn-floating btn-large red">
-        <i className="fa fa-plus"></i>
-      </Link>
-    </div>
+        
       </div>
     )
   }

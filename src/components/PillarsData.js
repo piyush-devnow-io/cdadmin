@@ -5,15 +5,19 @@ import PillarsTable from './PillarsTable';
 import Link from '@material-ui/core/Link';
 import PaginationWidget from './PaginationWidget';
 import * as Constants from './constants';
+import Grid from '@material-ui/core/Grid';
 
 
 class PillarsData extends Component{
   constructor(){
     super();
     this.state = {
-      pillars: []
+      pillars: [],
+      pageNumber: 1,
     }
     this.gotoAddPillars = this.gotoAddPillars.bind(this);
+    this.loadNextPage = this.loadNextPage.bind(this);
+    this.loadPreviousPage = this.loadPreviousPage.bind(this);
   }
 
   componentDidMount(){
@@ -26,7 +30,7 @@ class PillarsData extends Component{
   
 
   getUsers(){
-    axios.get(Constants.cdApiUrl + '/characterdaily/api/pillars/1',{headers: {"Authorization":"Bearer fafadfad"}})
+    axios.get(Constants.cdApiUrl + '/characterdaily/api/pillars/' + this.state.pageNumber,{headers: {"Authorization":"Bearer fafadfad"}})
       .then(response => {
         this.setState({pillars: response.data.pillars}, () => {
           //console.log(this.state);
@@ -35,11 +39,34 @@ class PillarsData extends Component{
     .catch(err => console.log(err));
   }
 
+  loadNextPage(page){
+    var x = this.state.pageNumber ; 
+    this.setState({pageNumber: x+1}, () => {
+      //console.log(this.state);
+      this.getUsers();
+    })
+  }
+
+  loadPreviousPage(page){
+    var x = this.state.pageNumber ; 
+    this.setState({pageNumber: x-1}, () => {
+      //console.log(this.state);
+      this.getUsers();
+    })
+  }
+
   render(){
     
   if(this.state.pillars.length == 0){
     return (
-        <div></div>
+      <div>
+      <div className="fixed-action-btn">
+
+<Link to="/lesson/add" onClick={this.gotoAddLesson}  className="btn-floating btn-large blue" >
+<i className="fa fa-plus"></i>
+</Link>
+</div>
+</div>
     );
   }
     return (
@@ -50,12 +77,19 @@ class PillarsData extends Component{
       </div>
           <PillarsTable pillarsData={this.state.pillars}/>
           <div className="fixed-action-btn">
-            
-      <Link to="/pillar/add" onClick={this.gotoAddPillars}  className="btn-floating btn-large blue">
+
+          <Grid container spacing={3}>
+        <Grid item >
+        <PaginationWidget previousPage={this.loadPreviousPage} nextPage={this.loadNextPage}/>  
+        </Grid>
+        <Grid >
+        <Link to="/pillar/add" onClick={this.gotoAddPillars}  className="btn-floating btn-large green">
         <i className="fa fa-plus"></i>
       </Link>
-      
-    </div>
+        </Grid>
+        </Grid>    </div>
+
+          
       </div>
     )
   }

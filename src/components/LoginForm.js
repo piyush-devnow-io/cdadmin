@@ -12,10 +12,14 @@ class LoginTab extends Component{
     super(props);
     this.state = {
         invalidCredentials : false,
+        token: localStorage.getItem('access_token'),
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
+    if(localStorage.getItem('access_token') != null){
+      this.props.history.push('/users');
+    }
   }
 
   
@@ -54,7 +58,8 @@ class LoginTab extends Component{
     <div>
         <div className="container">
 <div id="login" className="signin-card">
-  <div className="logo-image">
+  <div className="logo-image" >
+    <img src="https://cd-media-useast-1.s3.amazonaws.com/1589717741779-ezgif.com-webp-to-jpg.jpg" style={{display: "block",marginLeft:"auto",marginRight:"auto",width:"50%"}}/>
   </div>
   <h1 className="display1" style={{textAlign:"center"}}><b>CharacterDaily Admin</b></h1>
   <form action="" method="" className="" role="form" style={{marginTop:"8%"}}>

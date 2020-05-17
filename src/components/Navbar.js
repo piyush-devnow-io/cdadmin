@@ -24,7 +24,10 @@ class Navbar extends Component{
             <li><Link to="/quotes"><i className="fa fa-users"></i> Quotes</Link></li>         
             <li><Link to="/behaviours"><i className="fa fa-users"></i> Behaviours</Link></li>         
    
-            <li><Link to="/"><i className="fa fa-users"></i> Classrooms</Link></li>         
+            <li><Link to="/"><i className="fa fa-users"></i> Schools</Link></li>  
+                 
+            <li><Link to="/"><i className="fa fa-users"></i> Resources</Link></li>         
+  
 
             <li><Link to="/about"><i className="fa fa-question-circle"></i> About</Link></li> 
             </ul>
