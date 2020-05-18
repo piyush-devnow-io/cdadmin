@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import PaginationWidget from './PaginationWidget';
 import * as Constants from './constants';
 import Grid from '@material-ui/core/Grid';
+import SearchAppBar from './SearchBar';
 
 
 class PillarsData extends Component{
@@ -18,6 +19,8 @@ class PillarsData extends Component{
     this.gotoAddPillars = this.gotoAddPillars.bind(this);
     this.loadNextPage = this.loadNextPage.bind(this);
     this.loadPreviousPage = this.loadPreviousPage.bind(this);
+    this.checkKeyAndFetchData = this.checkKeyAndFetchData.bind(this);
+
   }
 
   componentDidMount(){
@@ -28,6 +31,27 @@ class PillarsData extends Component{
     this.props.history.push('/pillar/add');
   }
   
+  checkKeyAndFetchData(e){
+    console.log(e);
+    if(e.nativeEvent.key == 'Enter'){
+      if(e.target.value == ''){
+        this.getUsers();
+      }else{
+      this.getPillarsWithName(e.target.value);
+      }
+    }
+  }
+
+  getPillarsWithName(searchText){
+    axios.post(Constants.cdApiUrl + '/characterdaily/api/search/pillars/' + searchText,{},{headers: {"Authorization":"Bearer fafadfad"}})
+      .then(response => {
+        this.setState({pillars: response.data.pillars}, () => {
+          //console.log(this.state);
+        })
+    })
+    .catch(err => console.log(err));
+  }
+
 
   getUsers(){
     axios.get(Constants.cdApiUrl + '/characterdaily/api/pillars/' + this.state.pageNumber,{headers: {"Authorization":"Bearer fafadfad"}})
@@ -73,7 +97,9 @@ class PillarsData extends Component{
       <div>
         <div>
           
-        <h3>Pillars</h3>
+        <div style={{float:"left"}}>        <h3>Pillars</h3></div>
+        <SearchAppBar checkKeyAndFetchData={this.checkKeyAndFetchData}/>
+
       </div>
           <PillarsTable pillarsData={this.state.pillars}/>
           <div className="fixed-action-btn">

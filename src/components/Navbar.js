@@ -26,7 +26,7 @@ class Navbar extends Component{
    
             <li><Link to="/"><i className="fa fa-users"></i> Schools</Link></li>  
                  
-            <li><Link to="/"><i className="fa fa-users"></i> Resources</Link></li>         
+            <li><Link to="/resources"><i className="fa fa-users"></i> Resources</Link></li>         
   
 
             <li><Link to="/about"><i className="fa fa-question-circle"></i> About</Link></li> 

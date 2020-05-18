@@ -39,10 +39,12 @@ class LoginTab extends Component{
         "grantType":"password"
     }
     axios.post(Constants.authUrl + "/auth/login", data).then(response => {
+      if(response.data.roles != null && response.data.roles[0] == 'ADMIN'){
         console.log(response);
         localStorage.setItem('access_token',response.data.accessToken);
       //this.props.history.push('/');
       window.location.reload(true);
+      }
     }).catch(err => {
         //var message = err.data.message;
         //if(message == 'Bad credentials'){
@@ -61,7 +63,7 @@ class LoginTab extends Component{
   <div className="logo-image" >
     <img src="https://cd-media-useast-1.s3.amazonaws.com/1589717741779-ezgif.com-webp-to-jpg.jpg" style={{display: "block",marginLeft:"auto",marginRight:"auto",width:"50%"}}/>
   </div>
-  <h1 className="display1" style={{textAlign:"center"}}><b>CharacterDaily Admin</b></h1>
+  <h1 className="display1" style={{textAlign:"center"}}><b>CharacterCounts Admin</b></h1>
   <form action="" method="" className="" role="form" style={{marginTop:"8%"}}>
     <div id="form-login-username" className="form-group">
       <input id="username" className="form-control" name="username" type="text" size="18" alt="" required />

@@ -8,11 +8,13 @@ import LessonsData from './LessonsData';
 import QuotesData from './QuotesData';
 import BehavioursData from './BehavioursData';
 import AddPillar from './AddPillar'
+import AddLesson from './AddLesson'
 import LessonDetail from './LessonDetail'
 import PillarLessonsDetails from './PillarLessonsDetails'
 import PillarBehavioursDetails from './PillarBehavioursDetails'
 import PillarQuotesDetails from './PillarQuotesDetails'
 import LoginTab from './LoginForm';
+import ResourcesData from './ResourcesData';
 
 
 const Main = () => (
@@ -37,10 +39,13 @@ const Main = () => (
       
       <Route  path='/lesson/detail/:id' component={LessonDetail} />
 
-      <Route exact path='/lesson/add' component={AddPillar} />
+      <Route exact path='/lesson/add' component={AddLesson} />
 
       <Route exact path='/quote/add' component={AddPillar} />
       <Route exact path='/behaviour/add' component={AddPillar} />
+      <Route exact path='/resources' component={ResourcesData} />
+
+      
 
       {/*<Route exact path='/meetups/edit/:id' component={EditMeetup} />
 <Route exact path='/meetups/:id' component={MeetupDetails} />*/}

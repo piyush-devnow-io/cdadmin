@@ -217,6 +217,7 @@ class LessonDetail extends Component{
             </Grid>
             <Grid item xs={3}>
               <div style={{marginTop:'50px'}}>
+                
                 <div style={{marginBottom:'10px'}}>Grade : {this.state.grade}</div>
             {$imagePreview}
         

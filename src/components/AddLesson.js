@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import * as Constants from './constants';
+import Textarea from 'muicss/lib/react/textarea';
 
 class AddPillar extends Component{
 
@@ -66,15 +67,18 @@ class AddPillar extends Component{
      <div>
         <br />
        <Link className="btn grey" to="/">Back</Link>
-       <h3>Add Pillar</h3>
+       <h3>Add Lesson</h3>
        <form onSubmit={this.onSubmit.bind(this)}>
           <div className="input-field">
-            <input type="text" name="name" ref="name" />
-            <label htmlFor="name">Name</label>
+            <input type="text" name="name" value="lesson name" ref="name" />
+           <br></br>
+            <Textarea placeholder="text" />
+<br></br>
             {$imagePreview}
             <input ref="file" type="file" className="form-control" name="file" onChange={this.onFileChangeHandler}/>
-          </div>
 
+          </div>
+      <br></br>
           <input type="submit" value="Save" className="btn" />
         </form>
       </div>
