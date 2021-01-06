@@ -12,7 +12,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "admin-on-rest": "^1.4.1",
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "material-table": "^1.57.2",
     "material-ui": "^0.20.2",
     "mui-rte": "^1.17.6",
